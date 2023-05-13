@@ -1,0 +1,40 @@
+# Create a nginx pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wif-pod
+  namespace: wif
+  labels:
+    app: wif-pod
+    azure.workload.identity/use: "true"
+spec:
+  serviceAccountName: wif-sa
+  containers:
+    - name: wif-container
+      image: nginx
+      ports:
+        - containerPort: 80
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+      volumeMounts:
+      - name: secrets-store01-inline
+        mountPath: "/mnt/secrets-store"
+        readOnly: true
+      env:
+      - name: secret1
+        valueFrom:
+          secretKeyRef:
+            name: wif-secrets
+            key: secret1
+  volumes:
+    - name: secrets-store01-inline
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: "azure-kvname-workload-identity"

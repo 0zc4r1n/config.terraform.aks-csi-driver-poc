@@ -1,0 +1,7 @@
+# Create a namespace for the WIF application
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: wif
+  labels:
+    azure.workload.identity/use: "true"
