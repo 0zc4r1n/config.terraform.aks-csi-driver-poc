@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: config.terraform.aks-csi-driver-poc
+  annotations:
+    github.com/project-slug: 0zc4r1n/config.terraform.aks-csi-driver-poc
+spec:
+  type: other
+  lifecycle: unknown
+  owner: 0zc4r1n
